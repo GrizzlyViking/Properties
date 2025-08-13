@@ -16,9 +16,12 @@ class TenancyPeriod extends Model implements NodeInterface
         'property_id',
     ];
 
-    public function tenant()
+    public function tenants()
     {
-        return $this->belongsTo(Tenant::class);
+        return $this->belongsToMany(Tenant::class)
+            ->withPivot(['created_at', 'updated_at'])
+            ->withTimestamps();
+
     }
 
     public function property()

@@ -17,3 +17,4 @@ Please after pulling from the repository then please run:
 1. composer install
 2. npm install && npm build
 3. Please update .env file according to local settings (for this I used SQLite)
+4. php artisan migrate:refresh --seed 

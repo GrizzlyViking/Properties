@@ -26,12 +26,20 @@ return new class extends Migration
         Schema::create('tenancy_periods', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Tenant::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Property::class)->nullable()->constrained()->cascadeOnDelete();
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
         });
+
+        Schema::create('tenancy_period_tenant', function (Blueprint $table) {
+            $table->foreignId('tenant_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('tenancy_period_id')->constrained()->cascadeOnDelete();
+            $table->timestamps();
+
+            $table->primary(['tenant_id', 'tenancy_period_id']);
+        });
+
     }
 
     /**
@@ -39,6 +47,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('tenant_tenancy_period');
         Schema::dropIfExists('tenancy_periods');
         Schema::dropIfExists('tenants');
     }

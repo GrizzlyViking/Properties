@@ -26,9 +26,10 @@ class Tenant extends Model implements NodeInterface
         'comments',
     ];
 
-    public function tenancyPeriods(): HasMany
+    public function tenancyPeriods(): BelongsToMany
     {
-        return $this->hasMany(TenancyPeriod::class);
+        return $this->belongsToMany(TenancyPeriod::class)
+            ->withTimestamps();
     }
 
     public function properties(): BelongsToMany
